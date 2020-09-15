@@ -11,7 +11,6 @@ import UIKit
 import Combine
 
 public extension UIImageView {
-    @available(iOS 13.0, *)
     func loadImage(with url: URL, placeholderImage: UIImage? = nil) -> AnyCancellable {
         image = placeholderImage
         addSpinner()

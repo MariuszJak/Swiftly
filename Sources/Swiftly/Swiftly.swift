@@ -10,7 +10,6 @@ public class Switlfy {
         return queue
     }()
 
-    @available(iOS 13.0, *)
     public static func loadImage(from url: URL) -> AnyPublisher<UIImage?, Never> {
 
         if let image = cache[url] {

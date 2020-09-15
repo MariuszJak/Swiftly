@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-@available(iOS 9.0, *)
 extension UIImageView {
     func addSpinner() {
         let loadingIndicator = UIActivityIndicatorView()
