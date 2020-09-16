@@ -16,7 +16,8 @@ extension ImageCache: ImageCacheType {
 
         lock.lock(); defer { lock.unlock() }
         imageCache.setObject(decodedImage, forKey: url as AnyObject)
-        decodedImageCache.setObject(image as AnyObject, forKey: url as AnyObject)
+        decodedImageCache.setObject(image as AnyObject, forKey: url as AnyObject,
+                                    cost: decodedImage.diskSize)
     }
 
     func removeImage(for url: URL) {
@@ -42,7 +43,8 @@ extension ImageCache {
         }
         if let image = imageCache.object(forKey: url as AnyObject) as? UIImage {
             let decodedImage = image.decodedImage()
-            decodedImageCache.setObject(image as AnyObject, forKey: url as AnyObject)
+            decodedImageCache.setObject(image as AnyObject, forKey: url as AnyObject,
+                                        cost: decodedImage.diskSize)
             return decodedImage
         }
         return nil

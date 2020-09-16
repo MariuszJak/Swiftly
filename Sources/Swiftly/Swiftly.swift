@@ -11,7 +11,6 @@ public class Switlfy {
     }()
 
     public static func loadImage(from url: URL) -> AnyPublisher<UIImage?, Never> {
-
         if let image = cache[url] {
             return Just(image).eraseToAnyPublisher()
         }

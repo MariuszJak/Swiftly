@@ -25,4 +25,9 @@ extension UIImage {
         guard let decodedImage = context?.makeImage() else { return self }
         return UIImage(cgImage: decodedImage)
     }
+
+    var diskSize: Int {
+        guard let cgImage = cgImage else { return 0 }
+        return cgImage.bytesPerRow * cgImage.height
+    }
 }
