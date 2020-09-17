@@ -17,6 +17,7 @@ public extension UIImageView {
 
         return Switlfy.loadImage(from: url).sink { image in
             self.removeSpinner()
+            guard let image = image else { return }
             self.image = image
         }
     }

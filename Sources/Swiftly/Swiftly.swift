@@ -2,15 +2,40 @@ import UIKit
 import Combine
 import Foundation
 
+struct Environment {
+    var api = API()
+    var imageProvider = ImageProvider()
+}
+
+#if DEBUG
+var Current = Environment()
+#else
+let Current = Environment()
+#endif
+
 public class Switlfy {
-    private static let cache = ImageCache()
-    private static let backgroundQueue: OperationQueue = {
+    public static func loadImage(from url: URL) -> AnyPublisher<UIImage?, Never> {
+        return Current.imageProvider.loadImage(url)
+    }
+}
+
+class ImageProvider {
+    var loadImage: (_ url: URL) -> AnyPublisher<UIImage?, Never> = { url in
+        Current.api.loadImage(from: url)
+    }
+}
+
+class API {
+    private let cache = ImageCache()
+    private let backgroundQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 5
         return queue
     }()
+}
 
-    public static func loadImage(from url: URL) -> AnyPublisher<UIImage?, Never> {
+extension API {
+    public func loadImage(from url: URL) -> AnyPublisher<UIImage?, Never> {
         if let image = cache[url] {
             return Just(image).eraseToAnyPublisher()
         }
