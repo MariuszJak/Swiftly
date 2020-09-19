@@ -15,7 +15,9 @@ public extension UIImageView {
         image = placeholderImage
         addSpinner()
 
-        return Switlfy.loadImage(from: url).sink { image in
+        return Switlfy.loadImage(from: url).sink { (error) in
+            print(error)
+        } receiveValue: { (image) in
             self.removeSpinner()
             guard let image = image else { return }
             self.image = image

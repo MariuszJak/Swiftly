@@ -26,7 +26,10 @@ class ImageViewTests: XCTestCase {
         let expectedImage = UIColor.red.image(CGSize(width: 1024, height: 1024))
         let expectedImageView = UIImageView()
 
-        Current.imageProvider.loadImage = { _ in Just(expectedImage).eraseToAnyPublisher() }
+        Current.imageProvider.loadImage = { _ in Just(expectedImage)
+            .mapError { _ in AppError.unknown }
+            .eraseToAnyPublisher() }
+
         expectedImageView.loadImage(with: url).store(in: &cancellableSet)
         XCTAssertEqual(expectedImageView.image, expectedImage)
     }
@@ -36,7 +39,10 @@ class ImageViewTests: XCTestCase {
         let expectedImageView = UIImageView()
         let expectedPlaceholderImage = UIColor.yellow.image(CGSize(width: 2048, height: 2048))
 
-        Current.imageProvider.loadImage = { _ in Just(nil).eraseToAnyPublisher() }
+        Current.imageProvider.loadImage = { _ in Just(nil)
+            .mapError { _ in AppError.unknown }
+            .eraseToAnyPublisher() }
+
         expectedImageView.loadImage(with: url, placeholderImage: expectedPlaceholderImage).store(in: &cancellableSet)
         XCTAssertEqual(expectedImageView.image, expectedPlaceholderImage)
     }
@@ -46,7 +52,10 @@ class ImageViewTests: XCTestCase {
         let expectedImageView = UIImageView()
         let expectedPlaceholderImage = UIColor.yellow.image(CGSize(width: 2048, height: 2048))
 
-        Current.imageProvider.loadImage = { _ in Just(nil).eraseToAnyPublisher() }
+        Current.imageProvider.loadImage = { _ in Just(nil)
+            .mapError { _ in AppError.unknown }
+            .eraseToAnyPublisher() }
+
         expectedImageView.loadImage(with: url, placeholderImage: expectedPlaceholderImage).store(in: &cancellableSet)
         XCTAssertFalse(expectedImageView.subviews.contains { $0 is UIActivityIndicatorView })
     }
