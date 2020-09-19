@@ -10,7 +10,6 @@ import Combine
 import UIKit
 
 class RequestService {
-    private let cache = ImageCache()
     private let backgroundQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 5
@@ -18,14 +17,14 @@ class RequestService {
     }()
 
     func clearCache() {
-        cache.removeAllImages()
+        Current.cache.removeAllImages()
     }
 
     func requestImage<T: UIImage>(_ url: URL?) -> AnyPublisher<T?, Error> {
         guard let url = url else {
             return Fail(error: AppError.urlError).eraseToAnyPublisher()
         }
-        if let image = cache[url] {
+        if let image = Current.cache[url] {
             Log.info("Image from cache for: \(url)")
             return Just(image as? T)
                 .mapError { _ in AppError.unknown }
@@ -37,7 +36,7 @@ class RequestService {
             .handleEvents(receiveOutput: { image in
                 guard let image = image else { return }
                 Log.info("Cached image for: \(url)")
-                self.cache[url] = image
+                Current.cache[url] = image
             })
             .catch { error in return Fail(error: error) }
             .subscribe(on: backgroundQueue)

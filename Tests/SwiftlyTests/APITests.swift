@@ -25,8 +25,8 @@ class APITests: XCTestCase {
         let expectedImage = UIColor.red.image(CGSize(width: 1024,
                                              height: 1024))
         let url = URL(string: "http://test/image.jpg")!
-        let cache = ImageCache(config: .defaultConfig)
-        cache.insertImage(expectedImage, for: url)
+        
+        Current.cache.insertImage(expectedImage, for: url)
 
         Current.api.loadImage(from: url).sink { (error) in
             switch error {

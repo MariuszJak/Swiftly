@@ -8,6 +8,7 @@
 import Foundation
 
 struct Environment {
+    var cache = ImageCache(config: .defaultConfig)
     var api = API()
     var imageProvider = ImageProvider()
 }
