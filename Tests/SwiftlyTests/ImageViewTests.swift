@@ -13,11 +13,12 @@ class ImageViewTests: XCTestCase {
     private var cancellableSet: Set<AnyCancellable>!
 
     override func setUp() {
+        Log.logLevel = .disabled
         cancellableSet = Set()
-
     }
 
     override func tearDown() {
+        Current.api.clearCache()
         cancellableSet = nil
     }
 
@@ -57,6 +58,20 @@ class ImageViewTests: XCTestCase {
             .eraseToAnyPublisher() }
 
         expectedImageView.loadImage(with: url, placeholderImage: expectedPlaceholderImage).store(in: &cancellableSet)
+        XCTAssertFalse(expectedImageView.subviews.contains { $0 is UIActivityIndicatorView })
+    }
+
+    func testImageViewFailedRequest() {
+        let expectedImageView = UIImageView()
+
+        Log.logLevel = .error
+
+        Current.imageProvider.loadImage = { _ in Fail(error: AppError.urlError)
+            .eraseToAnyPublisher() }
+
+        expectedImageView.loadImage(with: nil)
+            .store(in: &cancellableSet)
+
         XCTAssertFalse(expectedImageView.subviews.contains { $0 is UIActivityIndicatorView })
     }
 

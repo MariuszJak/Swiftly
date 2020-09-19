@@ -63,6 +63,11 @@ final class SwiftlyTests: XCTestCase {
             }
         } receiveValue: { _ in }.store(in: &cancellableSet)
     }
+
+    func testLogLevel() {
+        Switlfy.setLog(with: .debug)
+        XCTAssertEqual(Log.logLevel.rawValue, 3)
+    }
 }
 
 extension UIColor {
