@@ -1,10 +1,3 @@
-//
-//  APITests.swift
-//  SwiftlyTests
-//
-//  Created by Mariusz Jakowienko on 19/09/2020.
-//
-
 import XCTest
 import Combine
 @testable import Swiftly

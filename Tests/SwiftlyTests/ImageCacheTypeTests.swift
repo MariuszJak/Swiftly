@@ -1,10 +1,3 @@
-//
-//  ImageCacheTypeTests.swift
-//  SwiftlyTests
-//
-//  Created by Mariusz Jakowienko on 17/09/2020.
-//
-
 import XCTest
 import Combine
 @testable import Swiftly

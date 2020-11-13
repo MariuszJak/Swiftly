@@ -1,10 +1,3 @@
-//
-//  Environment.swift
-//  
-//
-//  Created by Mariusz Jakowienko on 17/09/2020.
-//
-
 import Foundation
 
 struct Environment {

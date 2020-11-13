@@ -1,10 +1,3 @@
-//
-//  Log.swift
-//  
-//
-//  Created by Mariusz Jakowienko on 19/09/2020.
-//
-
 import Foundation
 
 enum LogType: String {

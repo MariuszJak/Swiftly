@@ -1,10 +1,3 @@
-//
-//  RequestService.swift
-//  
-//
-//  Created by Mariusz Jakowienko on 19/09/2020.
-//
-
 import Foundation
 import Combine
 import UIKit
